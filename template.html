@@ -1,73 +1,186 @@
+<link rel="stylesheet" href="/static/vendor/bootstrap-tagsinput.css" />
+<script src="/static/vendor/bootstrap-tagsinput.min.js"></script>
+ <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+ <script type="text/javascript">Parse.initialize("fGBnnI6lYgaHfnR06iAYER58jnA37WrnEB7dk3UX", "wjyesWeB0mWCGqtq4sd1q2yvl94IKkrd1AbuKpYA");</script>
+ <script type="text/javascript"> 
+//brand change
+$('.brand img').attr('src','https://farm6.staticflickr.com/5818/21792042229_0d5838cf60_m_d.jpg')
+ </script>
+
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
 <div class="row">
-    <!-- Success and Error Messages for the user --> 
-    <div class="col-md-6 col-md-offset-2" style="height:50px">
+    <div class="span6 offset2" style="height:3px">
         <div id="success" class="alert alert-success" style="display:none;">
             <a class="close">×</a>
-            <strong id="i18n_welldone">Well done!</strong> <span id="i18n_welldone_text">Your answer has been saved</span>
+            <strong id="i18n_welldone">很好！！</strong> <span id="i18n_welldone_text">你所選擇的選項已保存</span>
         </div>
         <div id="loading" class="alert alert-info" style="display:none;">
             <a class="close">×</a>
-            <span id="i18n_loading_next_task">Loading next task...</span>
+            <span id="i18n_loading_next_task">載入任務中...</span>
         </div>
-        <div id="taskcompleted" class="alert alert-info" style="display:none;">
-            <strong id="i18n_task_completed">The task has been completed!</strong> <span id="i18n_thanks">Thanks a lot!</span>
+        <div id="taskcompleted" class="alert alert-info" style="display:none;">      
+            <strong id="i18n_task_completed">所有的任務已經完成</strong> <span id="i18n_thanks">謝謝你!</span>
+
+            <a class="btn small" id="complete">確認</a>
+
+
         </div>
         <div id="finish" class="alert alert-success" style="display:none;">
-            <strong id="i18n_congratulations">Congratulations!</strong> <span id="i18n_congratulations_text">You have participated in all available tasks!</span>
+        <script type="text/javascript">
+        var userID=jQuery(".dropdown-menu li a:first").attr("href").split("/")[2];
+        var projectname=jQuery(".span12 h1 a").text();
+        var getData = Parse.Object.extend("Personal");
+        var query = new Parse.Query(getData);
+        query.equalTo("userID", userID);
+        query.equalTo("projectname", projectname);
+        query.find({
+        success: function(results) {               
+              if(results.length!=0){
+                var getusername=results[0].get('name');
+                var gettel=results[0].get('tel');
+                var getuseraddress=results[0].get('address');
+                window.localStorage["objectID"]=results[0].id;
+          
+                $("#completename").val(getusername);
+                $("#completetel").val(gettel);
+                $("#completeaddress").val(getuseraddress);
+                  document.getElementById("personalForm").style.display="none";
+                  document.getElementById("completeForms").style.display="block";
+              }
+              else{          
+                  document.getElementById("personalForm").style.display="block";
+                  document.getElementById("completeForms").style.display="none"; 
+
+            
+              }               
+        
+            },
+                error: function(error) {
+                 
+           
+            }
+            });
+        </script>
+
+        <div id="personalForm" style="display:block;">
+            <strong id="i18n_congratulations">感謝你!</strong> <span id="i18n_congratulations_text">你完成了所有的任務!</span>
+            <br/>
+            <div class="alert-actions">              
+            </div>
+            <h3>在離開之前,麻煩請輸入您的得獎資訊,以維護您的權利,以下皆為必填</h1>
+            <p>姓名</p><input type="text" name="contactname" title="搜尋聯絡人或網址..." class="c1" />
+            <br />
+            <p>電話</p>
+            <input type="tel" name="contacttel"  class="c2" />
+            <br />
+            <p>地址</p>
+            <input type="text" name="contactaddress" class="c3" />
+            <br />           
+            <a class="btn small"  id="projectcomplete">確認</a>
+            <a class="btn small"  id="clearthem" >重新輸入</a>
+        </div>
+         <div id="completeForms" style="display:none;">
+            <strong id="i18n_congratulations">感謝你!</strong> <span id="i18n_congratulations_text">你完成了所有的任務!</span>
             <br/>
             <div class="alert-actions">
-                <a class="btn small" href="/">Go back</a>
-                <a class="btn small" href="/app">or, Check other projects</a>
+               
             </div>
+            <h3>你已經完成填寫,但是在抽獎前還是可以修改你的聯絡資料,以下皆為必填</h1>
+            <p>姓名</p><input type="text" id="completename" class="c1" />
+            <br />
+            <p>電話</p>
+            <input type="tel" id="completetel"  class="c2" />
+            <br />
+            <p>地址</p>
+            <input type="text" id="completeaddress" class="c3" />
+            <br />
+           
+            <a class="btn small"  id="completechange">確認變更</a>
+            <a class="btn small"  id="clearthems">重新輸入</a>
         </div>
-        <div id="error" class="alert alert-danger" style="display:none;">
+        </div>
+        <div id="error" class="alert alert-error" style="display:none;">
             <a class="close">×</a>
-            <strong>Error!</strong> Something went wrong, please contact the site administrators
+            <strong>錯誤!</strong> 有些地方錯囉！請聯絡管理者或是重新登入
         </div>
     </div> <!-- End Success and Error Messages for the user -->
 </div> <!-- End of Row -->
 
-<!--
-    Task DOM for loading the Flickr Images
-    It uses the class="skeleton" to identify the elements that belong to the
-    task.
--->
 <div class="row skeleton"> <!-- Start Skeleton Row-->
-    <div class="col-md-6 "><!-- Start of Question and Submission DIV (column) -->
-        <h1 id="question"><span id="i18n_question">Do you see a human face in this photo?</span></h1> <!-- The question will be loaded here -->
-        <div id="answer"> <!-- Start DIV for the submission buttons -->
-            <!-- If the user clicks this button, the saved answer will be value="yes"-->
-            <button class="btn btn-success btn-answer" value='Yes'><i class="fa fa-thumbs-o-up"></i> <span id="i18n_yes">Yes</span></button>
-            <!-- If the user clicks this button, the saved answer will be value="no"-->
-            <button class="btn btn-danger btn-answer" value='No'><i class="fa fa-thumbs-o-down"></i> No</button>
-            <!-- If the user clicks this button, the saved answer will be value="NoPhoto"-->
-            <button class="btn btn-answer" value='NoPhoto'><i class="fa fa-exclamation"></i> <span id="i18n_no_photo">No photo</span></button>
-            <!-- If the user clicks this button, the saved answer will be value="NotKnown"-->
-            <button class="btn btn-answer" value='NotKnown'><i class="fa fa-question-circle"></i> <span id="i18n_i_dont_know">I don't know</span></button>
-        </div><!-- End of DIV for the submission buttons -->
+    <h1 class="question"><strong style="color:rgba(0, 0, 89, 0.7)">1.請閱讀下列關於自經區的網路輿情，並判斷下段文字是否支持自經區的政策</strong></h2>  <h2>  </h2>
+      <h2>  </h2>
+      
+      <h2 class="question" id="questions" style="line-height:40px;"  readonly="readonly"><span id="quest"></span> <nav id="questtest"></nav></h2>  
+      <h1> </h1>
+      <h1> </h1>
+       <h1 class="question"><strong style="color:rgba(0, 0, 89, 0.7)">2.點選上段文章中，讓您下此判斷的關鍵句子
+</strong></h1>
+            <!-- <select multiple  id="content"  data-role="tagsinput" /> -->
+          
+     <input name="tags" id="tags" style="width:90%"  />
+      <h1 class="question"><strong style="color:rgba(0, 0, 89, 0.7)">3.您認為上述言論的立場是支持或反對自經區的設立?</strong></h1>
+      <div id="answer" class="question"> 
+         
+<form>
+  <div id="radio" class="question radiobuttons">
+    <input  type="radio" id="radio1" name="radiog_dark" class="css-checkbox" checked="checked" value='Yes'><label for="radio1" class="css-label radGroup2" ><i class="icon icon-white icon-thumbs-up"></i><span id="i18n_yes" >支持</span></label>
+    <input type="radio" id="radio2" name="radiog_dark" class="css-checkbox" checked="checked" value='No'><label for="radio2" class="css-label radGroup2"><i class="icon icon-white icon-thumbs-down"></i>反對</label>
+    <input type="radio" id="radio3" name="radiog_dark" class="css-checkbox" checked="checked" value='neutral' ><label for="radio3" class="css-label radGroup2" ><i class="icon icon-exclamation" ></i>中立</label>
+    <input type="radio" id="radio4" name="radiog_dark" class="css-checkbox" checked="checked"  value='notKnown'><label for="radio4" class="css-label radGroup2"><i class="icon icon-white icon-question-sign"></i>無法判斷</label>
+  </div>
+
+  
+</form>
+<button id="nextOne"  style="position:relative;left:70%;font-size:xx-large;width:200px;height:50px;display:none">下一題</button>
+
+ 
+
+
+        </div>
+          </div> 
+        <!-- End of DIV for the submission buttons -->
         <!-- Feedback items for the user -->
-        <p><span id="i18n_working_task">You are working now on task:</span> <span id="task-id" class="label label-warning">#</span></p>
-        <p><span id="i18n_tasks_completed">You have completed:</span> <span id="done" class="label label-info"></span> <span id="i18n_tasks_from">tasks from</span>
+ 
+        <table border="1" class="question">
+       <h2 class="question">目前投票狀況</h2>
+　       <tr>      
+　       <h1><td>支持</td></h1>
+　       <td>反對</td>
+         <td>中立</td>
+　       </tr>
+　       <tr>
+　       <td id="infodata1">0</td>
+　       <td id="infodata2">0</td>
+        <td id="infodata3">0</td>
+　       </tr>
+        </table>
+
+       
+         <div >
+           
+        <div id="images"></div>
+
+        <p><span id="i18n_tasks_completed" class="question">已判定文章:</span> <span id="done" class="label label-info question"></span> <span id="i18n_tasks_from" class="question">剩餘文章:</span>
         <!-- Progress bar for the user -->
-        <span id="total" class="label label-info"></span></p>
-        <div class="progress progress-striped">
-            <div id="progress" rel="tooltip" title="#" class="progress-bar" style="width: 0%;"  role="progressbar"></div>
+        <span id="total" class="label label-inverse question"></span></p>
+        <div class="progress progress-striped question">
+            <div id="progress" rel="tooltip" title="#" class="bar" style="width: 0%;"></div>
         </div>
         <!-- 
-            This application uses Disqus to allow users to provide some feedback.
+            This project uses Disqus to allow users to provide some feedback.
             The next section includes a button that when a user clicks on it will
             load the comments, if any, for the given task
         -->
-        <div id="disqus_show_btn" style="margin-top:5px;">
-            <button class="btn btn-primary btn-large btn-disqus" onclick="loadDisqus()"><i class="fa fa-comments"></i> <span id="i18n_show_comments">Show comments</span></button>
-            <button class="btn btn-large btn-disqus" onclick="loadDisqus()" style="display:none"><i class="fa fa-comments"></i> <span id="i18n_hide_comments">Hide comments</span></button>
-        </div><!-- End of Disqus Button section -->
         <!-- Disqus thread for the given task -->
         <div id="disqus_thread" style="margin-top:5px;display:none"></div>
-    </div><!-- End of Question and Submission DIV (column) -->
-    <div class="col-md-6"><!-- Start of Photo DIV (column) -->
+   
+    <div class="span6"><!-- Start of Photo DIV (column) -->
         <a id="photo-link" href="#">
-            <img id="photo" src="http://i.imgur.com/GeHxzb7.png" style="max-width=100%">
+            <img id="photo" src="http://i.imgur.com/GeHxzb7.png" style="max-width=0px">
         </a>
     </div><!-- End of Photo DIV (columnt) -->
 </div><!-- End of Skeleton Row -->
@@ -96,6 +209,21 @@
 <script>
 // Default language
 var userLocale = "en";
+var totals;
+var dones;
+var totaltask;
+var tagsArray=[];
+
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+  
 // Translations
 var messages = {"en": {
                         "i18n_welldone": "Well done!",
@@ -105,7 +233,7 @@ var messages = {"en": {
                         "i18n_thanks": "Thanks a lot!",
                         "i18n_congratulations": "Congratulations",
                         "i18n_congratulations_text": "You have participated in all available tasks!",
-                        "i18n_yes": "Yes",
+                        "i18n_yes": "很帥",
                         "i18n_no_photo": "No photo",
                         "i18n_i_dont_know": "I don't know",
                         "i18n_working_task": "You are working now on task:",
@@ -113,63 +241,62 @@ var messages = {"en": {
                         "i18n_tasks_from": "tasks from",
                         "i18n_show_comments": "Show comments:",
                         "i18n_hide_comments": "Hide comments:",
-                        "i18n_question": "Do you see a human face in this photo?",
-                      },
-                "es": {
-                        "i18n_welldone": "Bien hecho!",
-                        "i18n_welldone_text": "Tu respuesta ha sido guardada",
-                        "i18n_loading_next_task": "Cargando la siguiente tarea...",
-                        "i18n_task_completed": "La tarea ha sido completadas!",
-                        "i18n_thanks": "Muchísimas gracias!",
-                        "i18n_congratulations": "Enhorabuena",
-                        "i18n_congratulations_text": "Has participado en todas las tareas disponibles!",
-                        "i18n_yes": "Sí",
-                        "i18n_no_photo": "No hay foto",
-                        "i18n_i_dont_know": "No lo sé",
-                        "i18n_working_task": "Estás trabajando en la tarea:",
-                        "i18n_tasks_completed": "Has completado:",
-                        "i18n_tasks_from": "tareas de",
-                        "i18n_show_comments": "Mostrar comentarios",
-                        "i18n_hide_comments": "Ocultar comentarios",
-                        "i18n_question": "¿Ves una cara humana en esta foto?",
+                        "i18n_question": "What?",
                       },
                };
 // Update userLocale with server side information
  $(document).ready(function(){
+
+    $('#tags').tagsInput({
+        'defaultText':'請選擇三句話',
+
+    });
+     $( "#radio" ).buttonset();
      userLocale = document.getElementById('PYBOSSA_USER_LOCALE').textContent.trim();
-
+   
+     $(window).bind('beforeunload', function (e) {
+       if(dones<35){
+                return '你目前才做到第'+dones+'題,確定要離開嗎?';
+       }
+            })
+   
 });
-
-function i18n_translate() {
-    var ids = Object.keys(messages[userLocale])
-    for (i=0; i<ids.length; i++) {
-        console.log("Translating: " + ids[i]);
-        document.getElementById(ids[i]).innerHTML = messages[userLocale][ids[i]];
-    }
-}
 
 
 function loadUserProgress() {
-    pybossa.userProgress('flickrperson').done(function(data){
-        var pct = Math.round((data.done*100)/data.total);
+    pybossa.userProgress('EconomicAreaForPA').done(function(data){
+        var pct = Math.round((data.done*100)/35);
         $("#progress").css("width", pct.toString() +"%");
         $("#progress").attr("title", pct.toString() + "% completed!");
         $("#progress").tooltip({'placement': 'left'}); 
-        $("#total").text(data.total);
+        $('#tags').importTags('');
+        $("#total").text(35-data.done);
+        totals=data.total;
+        
         $("#done").text(data.done);
+        //題數至35提以上,會自動跳出
+        if(data.done>=35){
+            $('#finish').show();
+            $('.question').hide(); 
+
+           
+        }
+        dones=data.done;
     });
 }
 
 pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
+       
+
         // load image from flickr
         var img = $('<img />');
         img.load(function() {
             // continue as soon as the image is loaded
             deferred.resolve(task);
         });
-        img.attr('src', task.info.url_b).css('height', 460);
-        img.addClass('img-thumbnail img-responsive');
+        img.attr('src', task.info.url_b).css('height', 960);
+        img.addClass('img-polaroid');
         task.info.image = img;
     }
     else {
@@ -180,19 +307,86 @@ pybossa.taskLoaded(function(task, deferred) {
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
         loadUserProgress();
-        i18n_translate();
-        $('#photo-link').html('').append(task.info.image);
-        $("#photo-link").attr("href", task.info.link);
-        //$("#question").html(task.info.question);
-        $('#task-id').html(task.id);
-        $('.btn-answer').off('click').on('click', function(evt) {
-            var answer = $(this).attr("value");
-            if (typeof answer != 'undefined') {
-                //console.log(answer);
-                pybossa.saveTask(task.id, answer).done(function() {
-                    deferred.resolve();
+   
+        document.getElementById("nextOne").style.display="none";
+        document.getElementById('radio1').checked = false;
+        document.getElementById('radio2').checked = false;
+        document.getElementById('radio3').checked = false;
+        document.getElementById('radio4').checked = false;
+     
+        totaltask=task;
+        var info1=0;
+        var info2=0;
+        var info3=0;
+        var info4=0;
+     $.get( "http://asgard.plsm.cs.nccu.edu.tw:5000/api/taskrun?task_id="+task.id, function( data ) {
+      
+        for(var k in data) {
+            if(data.length>0){
+            var whichOne=data[k].info.split("/")[0];
+
+            if(whichOne=="Yes"){
+                     
+                info1=info1+1;                
+            }
+            if(whichOne=="No"){
+
+                info2=info2+1;
+            }
+             if(whichOne=="neutral"){
+
+                info3=info3+1;
+            }
+            $('#infodata1').html(info1);
+            $('#infodata2').html(info2);
+            $('#infodata3').html(info3);
+            }
+            else{
+        
+            $('#infodata1').html(info1);
+            $('#infodata2').html(info2);
+            $('#infodata3').html(info3);
+
+
+            }
+        
+
+           
+        }
                 });
-                $("#loading").fadeIn(500);
+
+
+        $('#task-id').html(task.id);
+ 
+        //$('#quest').text(task.info.question);
+        var questionAll=task.info.question.split(/，|。|？/);
+
+       for(var i=0;i<questionAll.length-1;i++){
+
+         $("#questtest").append("<a id='questtest"+i+"' class='questtests cl-effect-4' onclick='ShowValue(questtest"+i+")'>"+questionAll[i]+"，</a>");
+
+       }
+       $("#questtest").append("<a id='questtest"+questionAll.length+"' class='questtests cl-effect-4' onclick='ShowValue(questtest"+questionAll.length+")'>"+questionAll[questionAll.length-1]+"。</a>"); 
+$( "#nextOne" ).click(function() {
+     var textareaDATA=$("#tags").val();
+       
+            if(textareaDATA!=""){
+          
+
+            var btn = $('input:radio:checked[name="radio"]').val();
+            var contentData=$("#content").val();
+       
+            var answer = btn+"/"+contentData;
+
+            if (typeof answer != 'undefined') {
+                pybossa.saveTask(task.id, answer).done(function() {
+
+                    deferred.resolve();
+                    $('#content').val("");
+                    window.document.body.scrollTop = 0;
+                    window.document.documentElement.scrollTop = 0;
+                });
+        $("#loading").fadeIn(500);
                 if ($("#disqus_thread").is(":visible")) {
                     $('#disqus_thread').toggle();
                     $('.btn-disqus').toggle();
@@ -201,8 +395,18 @@ pybossa.presentTask(function(task, deferred) {
             else {
                 $("#error").show();
             }
-        });
-        $("#loading").hide();
+        
+        
+        }
+        else{
+            alert("請選擇關鍵句");
+
+        }
+
+});
+       $("#loading").hide();
+        $('#i18n_question').hide();
+        $("#photo-link").hide();
     }
     else {
         $(".skeleton").hide();
@@ -211,5 +415,200 @@ pybossa.presentTask(function(task, deferred) {
     }
 });
 
-pybossa.run('flickrperson');
+
+pybossa.run('EconomicAreaForPA');
+
+
+$( "#projectcomplete" ).click(function() { 
+    var username=$('input[name="contactname"]').val();
+    var usertel=$('input[name="contacttel"]').val();
+    var useraddress=$('input[name="contactaddress"]').val();
+    var alertText="";
+    if(username==""){
+        alertText="請輸入名字\n";
+    }
+    if(usertel==""){
+        alertText=alertText+"請輸入電話\n";
+    }
+    if(useraddress==""){
+        alertText=alertText+"請輸入地址\n";
+    }
+    if(alertText!=""){
+        alert(alertText);
+
+    }
+    else{
+    var Personal_data = Parse.Object.extend("Personal");
+    var personal_Data = new Personal_data();
+    personal_Data.set("name",username);
+    personal_Data.set("tel",usertel);
+    personal_Data.set("address",useraddress);
+
+    var userID=jQuery(".dropdown-menu li a:first").attr("href").split("/")[2];
+    personal_Data.set("userID",userID);
+    personal_Data.set("projectname",projectname);
+    personal_Data.save(null, {
+        success: function(data) {
+                    window.location.href="/";
+                    alert("資料已新增");
+    },
+    error: function(gameScore, error) {
+        alert('Failed to create new object, with error code: ' + error.description);
+    }
+                            });
+}
+});
+
+$( "#completechange" ).click(function() { 
+    var completeusername=$('#completename').val();
+    var completeusertel=$('#completetel').val();
+    var completeuseraddress=$('#completeaddress').val();
+    var alertText="";
+    if(completeusername==""){
+        alertText=alertText+"請輸入名字\n";
+    }
+    if(completeusertel==""){
+        alertText=alertText+"請輸入電話\n";
+    }
+    if(completeuseraddress==""){
+        alertText=alertText+"請輸入地址\n";
+    }
+    if(alertText!=""){
+        alert(alertText);
+
+    }
+    else{
+    var change_data = Parse.Object.extend("Personal");
+    var query = new Parse.Query(change_data);
+
+    var userID=jQuery(".dropdown-menu li a:first").attr("href").split("/")[2];
+    query.get(window.localStorage["objectID"], {
+    success: function(data) {
+          data.set("name",completeusername);
+          data.set("tel",completeusertel);
+          data.set("address",completeuseraddress);
+          data.save();
+          alert("資料已更新");
+          window.location.href="/";
+    },
+    error: function(object, error) {
+    // The object was not retrieved successfully.
+    // error is a Parse.Error with an error code and description.
+    }
+    }
+    );
+}
+
+});
+$("#clearthems").click(function() { 
+
+    $("#contactname").val("");
+    $("#contacttel").val(""); 
+    $("#contactaddress").val(""); 
+  
+});
+
+$("#clearthems").click(function() { 
+
+    $("#completename").val("");
+    $("#completetel").val(""); 
+    $("#completeaddress").val(""); 
+  
+});
+$(".radiobuttons").click(function() { 
+
+  $( "#nextOne" ).show();
+  
+});
+
+
+
+function ShowValue(whichDiv){
+    var  tagAllNum=$('#tags').val();
+
+     if (!$('#tags').tagExist(whichDiv.innerHTML)) { 
+    if(tagAllNum.split(",").length<3){
+    $('#tags').addTag(whichDiv.innerHTML.split("，")[0]);
+ }
+
+}
+
+
+
+}
+
 </script>
+<style type="text/css">
+input[type=radio].css-checkbox {
+                            position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+                        }
+
+                        input[type=radio].css-checkbox + label.css-label {
+                            padding-left:55px;
+                            height:50px; 
+                            display:inline-block;
+                            line-height:50px;
+                            background-repeat:no-repeat;
+                            background-position: 0 0;
+                            font-size:20px;
+                            vertical-align:middle;
+                            cursor:pointer;
+
+                        }
+
+                        input[type=radio].css-checkbox:checked + label.css-label {
+                            background-position: 0 -50px;
+                        }
+                        label.css-label {
+                background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_b7cbb496d72400d4fe9b79cc10fca3f1.png);
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+/* Effect 4: bottom border enlarge */
+.cl-effect-4 a {
+    padding: 0 0 10px;
+    float: none;
+    display: inline;
+}
+
+.cl-effect-4 a::after {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    content: '';
+    opacity: 0;
+    -webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+    -moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
+    transition: height 0.3s, opacity 0.3s, transform 0.3s;
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
+}
+
+.cl-effect-4 a:hover::after,
+.cl-effect-4 a:focus::after {
+    height: 5px;
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
+}
+a:hover {
+    color: #E00716;
+    text-decoration: underline;
+}
+a{
+    color:black; 
+}
+.tagsinput{
+  width: 90% !important;
+}
+</style>

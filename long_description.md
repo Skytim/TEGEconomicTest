@@ -1,36 +1,34 @@
-Flickr Person is a **demo application** for PyBossa that shows how you can
-crowdsourcing an image classification problem.
+自由經濟示範區之網路輿情的立場判定實驗
+==================
+我們是國立政治大學公共行政學系的研究團隊，目前正在進行一項關於藉由群眾外包來判定網路輿情立場的研究計畫。我們希望能夠比較一般網路群眾、電腦AI、以及少數經過特別訓練的助理，對於網路輿情立場的判定結果是否具有差異，以及可能的影響因素為何，以藉此探討未來如何提升我們對網路輿情判定上的效率和準確性。
+-----------------
+因此，我們希望能夠獲得您的協助，本次研究將以自由經濟示範區（以下簡稱自經區）的相關輿論為主題，請您在看過各種不同關於自經區的網路輿情的內容後，幫助我們判斷該內容對於自經區的設立究竟抱持著怎麼樣的立場，是「支持」、「反對」、還是「中立」？
+------------------
+關於自經區的相關資訊懶人包請參考：
+-----------------
 
-This application uses the Flickr web service as the source of the data. By
-using Flickr, we have the possibility of using its API to refine the searches,
-and looking for specific tags or descriptions that match a specific criteria,
-i.e. houses of 1920 or tsunami.
+[自由經濟示範區懶人包](http://www.fepz.org.tw/pkg.aspx)
+==================
 
-In this demo application, we use a very simple approach by polling the latest
-20 published photos in the public Flickr feed.
+------------------
+為了感謝您的協助，只要在11月8日前，完成所有我們分配給您的輿情立場判定數量，以及填寫相關問卷後，我們將贈送面額200元的全家便利商店的禮物卡給您。並歡迎您將此訊息分享給您的親友，一同來參與我們的計畫。
+------------------
+但請注意，為避免影響實驗的結果，還請您避免重複參與輿情判定的實驗。若研究團隊發現有重複的作答情形時，我們將取消對您的贈品。
+------------------
+如有任何問題請藉以下信箱與政治大學公共行政學系之
+陳揚中
+--------------------------------------------
+博士生(103256503@nccu.edu.tw)聯繫
+------------------
 
-The feed provides the direct link to the photo. This link is used to show the
-image to the users, and ask them the following question: **Do you see a human
-in this photo?**
+------------------
+謝謝
+------------------
 
-The application provides three simple answers as action buttons:
 
-  * Yes
-  * No and
-  * I don't know
+![](https://farm1.staticflickr.com/762/22116545251_2cb0b6f15a_z_d.jpg)
 
-![](http://farm7.staticflickr.com/6109/6286728068_2f3c6912b8_q.jpg)
 
-Based on the answer of the users, we will be able to classify the photos,
-distributing the tasks (thanks to PyBossa) to different users and volunteers.
 
-__ Note If you want to learn more about how to use this application as a
-template, check the:
 
-  * [source code](http://github.com/PyBossa/app-flickrperson)
-  * [ Google Spreadsheet Task Template](https://docs.google.com/spreadsheet/ccc?key=0AsNlt0WgPAHwdHFEN29mZUF0czJWMUhIejF6dWZXdkE&usp=sharing#gid=0)
-  * [the official documentation of PyBossa](http://docs.pybossa.com/) and 
-  * [the step by step tutorial.](http://docs.pybossa.com/en/latest/user/tutorial.html)
-
-* * *
 

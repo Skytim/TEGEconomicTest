@@ -1,6 +1,6 @@
 {
-    "name": "Flickr Person Finder",
-    "short_name": "flickrperson",
-    "description": "Image pattern recognition",
-    "question": "Do you see a real human face in this photo?"
+    "name": "自由經濟示範區之網路輿情的立場判定實驗",
+    "short_name":"EconomicAreaForPA",
+    "description":"本計畫主要是希望藉由一般網路群眾的協助，幫助我們判斷各種不同網路輿情對於自經區所抱持的立場",
+    "question": "該段文字論述的內容是否支持自經區的政策?"
 }
